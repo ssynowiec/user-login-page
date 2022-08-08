@@ -14,8 +14,8 @@ interface InputProps {
   readonly?: boolean;
   value?: string | number;
   label: string;
-  onChange: (value: string) => void;
-  onBlur?: () => void;
+  onChange: (e: ChangeEvent) => void;
+  onBlur?: any;
   hasError?: boolean;
   error?: string;
 }
@@ -37,10 +37,6 @@ export const Input = ({
   hasError,
   error,
 }: InputProps) => {
-  const changeHandler = (e: ChangeEvent) => {
-    onChange((e.target as HTMLInputElement).value);
-  };
-
   return (
     <div className={clsx(styles.inputContainer, hasError && styles.error)}>
       <label htmlFor={id} className={styles.inputLabel}>
@@ -58,7 +54,7 @@ export const Input = ({
         placeholder={placholder}
         readOnly={readonly}
         className={clsx(styles.input, isDisabled && styles.disabled)}
-        onChange={changeHandler}
+        onChange={onChange}
         onBlur={onBlur}
       />
       <p className={styles.errorText}>{hasError && error}</p>

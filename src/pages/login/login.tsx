@@ -1,3 +1,4 @@
+import { Formik } from 'formik';
 import { Footer } from '../../components/Layouts/footer/Footer';
 import { Card } from '../../components/UI/card/Card';
 import { Button } from '../../components/UI/button/Button';
@@ -16,20 +17,6 @@ export const Login = () => {
     return reg.test(email || '');
   };
 
-  const {
-    value: email,
-    isValid: emailIsValid,
-    hasError: emailHasError,
-    valueChangeHandler: emailChangeHandler,
-    inputBlurHandler: emailBlurHandler,
-  } = useInput((value: string | undefined) => validateEmail(value));
-
-  const {
-    value: password,
-    valueChangeHandler: passwordChangeHandler,
-    inputBlurHandler: passwordBlurHandler,
-  } = useInput((value: string | undefined) => validateEmail(value));
-
   return (
     <>
       <main className={styles.loginContainer}>
@@ -39,80 +26,101 @@ export const Login = () => {
             <h1 className={styles.loginTitle}>Login</h1>
             <p>Lorem, ipsum dolor sit amet.</p>
           </header>
-          <form className={styles.loginForm}>
-            <div>
-              <Input
-                type='email'
-                id='email'
-                inputName='email'
-                autocomlepte='on'
-                autofocus={true}
-                placholder='name@example.com'
-                value={email}
-                label='Adres E-mail'
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
-                hasError={emailHasError}
-                error='Please enter a valid email address!'
-              />
-              <Button
-                type='button'
-                customClass={styles.button}
-                value='continue'
-                isDisabled={!emailIsValid || emailHasError}
-              />
-              <hr className={styles.hr} data-content='or' />
-              <section className={styles.socialLogin}>
-                <Button
-                  type='button'
-                  customClass={clsx(styles.button, styles.googleButton)}
-                >
-                  <div className='left'>
-                    <img
-                      width='23px'
-                      height='23px'
-                      alt='Google sign-in'
-                      src={googleLogo}
-                      className={styles.socialLogo}
-                    />
-                  </div>
-                  &nbsp;Login with Google
-                </Button>
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            validate={values => {
+              interface errorsType {
+                email?: string;
+              }
+              const errors: errorsType = {};
+              if (!values.email) {
+                errors.email = 'Email is required!';
+              } else if (
+                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+              ) {
+                errors.email = 'Invalid email address!';
+              }
+              return errors;
+            }}
+            onSubmit={values => console.log(values)}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <form className={styles.loginForm} onSubmit={handleSubmit}>
+                <div>
+                  <Input
+                    type='email'
+                    id='email'
+                    inputName='email'
+                    autocomlepte='on'
+                    autofocus={true}
+                    placholder='name@example.com'
+                    value={values.email}
+                    label='Adres E-mail'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    hasError={!!errors.email}
+                    error={errors.email}
+                  />
+                  <Button
+                    type='button'
+                    customClass={styles.button}
+                    value='continue'
+                    isDisabled={!errors.email}
+                  />
+                  <hr className={styles.hr} data-content='or' />
+                  <section className={styles.socialLogin}>
+                    <Button
+                      type='button'
+                      customClass={clsx(styles.button, styles.googleButton)}
+                    >
+                      <div className='left'>
+                        <img
+                          alt='Google sign-in'
+                          src={googleLogo}
+                          className={styles.socialLogo}
+                        />
+                      </div>
+                      Login with Google
+                    </Button>
 
-                <Button
-                  type='button'
-                  customClass={clsx(styles.button, styles.facebookButton)}
-                >
-                  <div className='left'>
-                    <img
-                      width='23px'
-                      height='23px'
-                      alt='Facebook sign-in'
-                      src={fbLogo}
-                      className={styles.socialLogo}
-                    />
-                  </div>
-                  &nbsp;Login with Facebook
-                </Button>
+                    <Button
+                      type='button'
+                      customClass={clsx(styles.button, styles.facebookButton)}
+                    >
+                      <div className='left'>
+                        <img
+                          alt='Facebook sign-in'
+                          src={fbLogo}
+                          className={styles.socialLogo}
+                        />
+                      </div>
+                      Login with Facebook
+                    </Button>
 
-                <Button
-                  type='button'
-                  customClass={clsx(styles.button, styles.githubButton)}
-                >
-                  <div className='left'>
-                    <img
-                      width='23px'
-                      height='23px'
-                      alt='GitHub sign-in'
-                      src={githubLogo}
-                      className={styles.socialLogo}
-                    />
-                  </div>
-                  &nbsp;Login with GitHub
-                </Button>
-              </section>
-            </div>
-            <div>
+                    <Button
+                      type='button'
+                      customClass={clsx(styles.button, styles.githubButton)}
+                    >
+                      <div className='left'>
+                        <img
+                          alt='GitHub sign-in'
+                          src={githubLogo}
+                          className={styles.socialLogo}
+                        />
+                      </div>
+                      Login with GitHub
+                    </Button>
+                  </section>
+                </div>
+                {/* <div>
               <Input
                 type='password'
                 id='password'
@@ -124,8 +132,10 @@ export const Login = () => {
                 onChange={passwordChangeHandler}
                 onBlur={passwordBlurHandler}
               />
-            </div>
-          </form>
+            </div> */}
+              </form>
+            )}
+          </Formik>
         </Card>
       </main>
       <Footer />
