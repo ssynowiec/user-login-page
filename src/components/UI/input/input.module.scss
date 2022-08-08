@@ -1,0 +1,35 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+
+  .inputLabel {
+    padding: 3rem 0 1rem 0.5rem;
+  }
+
+  .input {
+    padding: 1rem 1.5rem;
+    border: 2px solid;
+    border-radius: 5px;
+    transition: border-color 0.5s;
+    // font-size: 1rem;
+  }
+}
+
+.error {
+  color: #ff3333;
+
+  &Text {
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+  }
+
+  .input {
+    outline: none;
+    color: #ff3333;
+    border-color: #ff3333;
+
+    &:focus {
+      border-color: #ff3333;
+    }
+  }
+}
