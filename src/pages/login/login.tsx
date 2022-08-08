@@ -10,11 +10,19 @@ import fbLogo from '../../assets/images/logo/facebook.png';
 import googleLogo from '../../assets/images/logo/google.png';
 import githubLogo from '../../assets/images/logo/github.png';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 export const Login = () => {
+  const [step, setStep] = useState(1);
+
   const validateEmail = (email: string | undefined) => {
     const reg = /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     return reg.test(email || '');
+  };
+
+  const secondStep = () => {
+    setStep(2);
+    console.log('test');
   };
 
   return (
@@ -31,6 +39,7 @@ export const Login = () => {
             validate={values => {
               interface errorsType {
                 email?: string;
+                password?: string;
               }
               const errors: errorsType = {};
               if (!values.email) {
@@ -40,9 +49,15 @@ export const Login = () => {
               ) {
                 errors.email = 'Invalid email address!';
               }
+
+              if (!values.password) {
+                errors.password = `Password can't be empty`;
+              }
               return errors;
             }}
-            onSubmit={values => console.log(values)}
+            onSubmit={(values, actions) => {
+              console.log(values);
+            }}
           >
             {({
               values,
@@ -54,7 +69,7 @@ export const Login = () => {
               isSubmitting,
             }) => (
               <form className={styles.loginForm} onSubmit={handleSubmit}>
-                <div>
+                {step === 1 && (
                   <Input
                     type='email'
                     id='email'
@@ -69,70 +84,87 @@ export const Login = () => {
                     hasError={!!errors.email}
                     error={errors.email}
                   />
+                )}
+                {step === 2 && (
+                  <Input
+                    type='password'
+                    id='password'
+                    inputName='password'
+                    autocomlepte='on'
+                    placholder='************'
+                    value={values.password}
+                    label='Password'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                )}
+
+                {step === 1 && (
                   <Button
                     type='button'
                     customClass={styles.button}
                     value='continue'
-                    isDisabled={!errors.email}
+                    isDisabled={!!errors.email}
+                    onClick={secondStep}
                   />
-                  <hr className={styles.hr} data-content='or' />
-                  <section className={styles.socialLogin}>
-                    <Button
-                      type='button'
-                      customClass={clsx(styles.button, styles.googleButton)}
-                    >
-                      <div className='left'>
-                        <img
-                          alt='Google sign-in'
-                          src={googleLogo}
-                          className={styles.socialLogo}
-                        />
-                      </div>
-                      Login with Google
-                    </Button>
+                )}
 
-                    <Button
-                      type='button'
-                      customClass={clsx(styles.button, styles.facebookButton)}
-                    >
-                      <div className='left'>
-                        <img
-                          alt='Facebook sign-in'
-                          src={fbLogo}
-                          className={styles.socialLogo}
-                        />
-                      </div>
-                      Login with Facebook
-                    </Button>
+                {step === 2 && (
+                  <Button
+                    type='submit'
+                    customClass={styles.button}
+                    value='login'
+                    isDisabled={!!errors.password && !values.password}
+                  />
+                )}
+                {step === 1 && (
+                  <>
+                    <hr className={styles.hr} data-content='or' />
+                    <section className={styles.socialLogin}>
+                      <Button
+                        type='button'
+                        customClass={clsx(styles.button, styles.googleButton)}
+                      >
+                        <div className='left'>
+                          <img
+                            alt='Google sign-in'
+                            src={googleLogo}
+                            className={styles.socialLogo}
+                          />
+                        </div>
+                        Login with Google
+                      </Button>
 
-                    <Button
-                      type='button'
-                      customClass={clsx(styles.button, styles.githubButton)}
-                    >
-                      <div className='left'>
-                        <img
-                          alt='GitHub sign-in'
-                          src={githubLogo}
-                          className={styles.socialLogo}
-                        />
-                      </div>
-                      Login with GitHub
-                    </Button>
-                  </section>
-                </div>
-                {/* <div>
-              <Input
-                type='password'
-                id='password'
-                inputName='password'
-                autocomlepte='on'
-                placholder='************'
-                value={password}
-                label='Password'
-                onChange={passwordChangeHandler}
-                onBlur={passwordBlurHandler}
-              />
-            </div> */}
+                      <Button
+                        type='button'
+                        customClass={clsx(styles.button, styles.facebookButton)}
+                      >
+                        <div className='left'>
+                          <img
+                            alt='Facebook sign-in'
+                            src={fbLogo}
+                            className={styles.socialLogo}
+                          />
+                        </div>
+                        Login with Facebook
+                      </Button>
+
+                      <Button
+                        type='button'
+                        customClass={clsx(styles.button, styles.githubButton)}
+                      >
+                        <div className='left'>
+                          <img
+                            alt='GitHub sign-in'
+                            src={githubLogo}
+                            className={styles.socialLogo}
+                          />
+                        </div>
+                        Login with GitHub
+                      </Button>
+                    </section>
+                  </>
+                )}
               </form>
             )}
           </Formik>

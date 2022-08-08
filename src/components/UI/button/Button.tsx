@@ -8,6 +8,7 @@ interface ButtonProps {
   value?: string;
   customClass?: string;
   children?: ReactNode;
+  onClick?: () => void;
 }
 
 export const Button = ({
@@ -16,6 +17,7 @@ export const Button = ({
   value,
   customClass,
   children,
+  onClick,
 }: ButtonProps) => {
   return (
     <button
@@ -26,6 +28,7 @@ export const Button = ({
         customClass,
         isDisabled && styles.disabled,
       )}
+      onClick={onClick}
     >
       {value || children}
     </button>
