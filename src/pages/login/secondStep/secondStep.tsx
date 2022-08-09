@@ -49,6 +49,7 @@ export const SecondStep = ({
           customClass={styles.button}
           value='login'
           isDisabled={!!errors && !password}
+          style='dark'
         />
       </form>
     </Card>

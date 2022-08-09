@@ -9,6 +9,7 @@ interface ButtonProps {
   customClass?: string;
   children?: ReactNode;
   onClick?: () => void;
+  style?: 'dark' | 'light';
 }
 
 export const Button = ({
@@ -18,6 +19,7 @@ export const Button = ({
   customClass,
   children,
   onClick,
+  style = 'light',
 }: ButtonProps) => {
   return (
     <button
@@ -27,6 +29,8 @@ export const Button = ({
         styles.button,
         customClass,
         isDisabled && styles.disabled,
+        // style === 'dark' && styles.dark,
+        styles[style],
       )}
       onClick={onClick}
     >

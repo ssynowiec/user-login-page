@@ -1,5 +1,11 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .loginContainer {
-  height: 95vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,10 +25,46 @@
 }
 
 .loginForm {
-  width: 20vw;
+  width: 98vw;
   padding: 1rem 3.5rem;
 }
 
 .button {
   width: 100%;
+}
+
+@media screen and (max-width: 576px) {
+  .loginForm {
+    width: 98vw;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .loginForm {
+    width: 80vw;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .loginForm {
+    width: 70vw;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .loginForm {
+    width: 55vw;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+  .loginForm {
+    width: 45vw;
+  }
+}
+
+@media (min-width: 1400px) {
+  .loginForm {
+    width: 30vw;
+  }
 }
