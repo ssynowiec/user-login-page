@@ -15,7 +15,7 @@ interface props {
   handleChange: (e: ChangeEvent) => void;
   handleBlur: (e: FocusEvent) => void;
   errors: string | undefined;
-  goToSecondStep: () => void;
+  goToSecondStep: (userEmail: string) => void;
 }
 
 export const FirstStep = ({
@@ -26,6 +26,10 @@ export const FirstStep = ({
   errors,
   goToSecondStep,
 }: props) => {
+  const clickHandler = () => {
+    goToSecondStep(email);
+  };
+
   return (
     <Card type='column'>
       <header className={styles.loginHeader}>
@@ -39,7 +43,7 @@ export const FirstStep = ({
           id='email'
           inputName='email'
           autocomlepte='on'
-          autofocus={true}
+          autofocus={false}
           placholder='name@example.com'
           value={email}
           label='Adres E-mail'
@@ -53,8 +57,8 @@ export const FirstStep = ({
           type='button'
           customClass={styles.button}
           value='continue'
-          isDisabled={!!errors && !email}
-          onClick={goToSecondStep}
+          isDisabled={(!!errors && !!email) || email === ''}
+          onClick={clickHandler}
         />
 
         <>
@@ -64,13 +68,11 @@ export const FirstStep = ({
               type='button'
               customClass={clsx(styles.button, styles.googleButton)}
             >
-              <div className='left'>
-                <img
-                  alt='Google sign-in'
-                  src={googleLogo}
-                  className={styles.socialLogo}
-                />
-              </div>
+              <img
+                alt='Google sign-in'
+                src={googleLogo}
+                className={styles.socialLogo}
+              />
               Login with Google
             </Button>
 
@@ -78,13 +80,11 @@ export const FirstStep = ({
               type='button'
               customClass={clsx(styles.button, styles.facebookButton)}
             >
-              <div className='left'>
-                <img
-                  alt='Facebook sign-in'
-                  src={fbLogo}
-                  className={styles.socialLogo}
-                />
-              </div>
+              <img
+                alt='Facebook sign-in'
+                src={fbLogo}
+                className={styles.socialLogo}
+              />
               Login with Facebook
             </Button>
 
@@ -92,13 +92,11 @@ export const FirstStep = ({
               type='button'
               customClass={clsx(styles.button, styles.githubButton)}
             >
-              <div className='left'>
-                <img
-                  alt='GitHub sign-in'
-                  src={githubLogo}
-                  className={styles.socialLogo}
-                />
-              </div>
+              <img
+                alt='GitHub sign-in'
+                src={githubLogo}
+                className={styles.socialLogo}
+              />
               Login with GitHub
             </Button>
           </section>

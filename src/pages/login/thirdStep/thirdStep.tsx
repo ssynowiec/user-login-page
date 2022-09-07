@@ -1,24 +1,32 @@
 import { Card } from '../../../components/UI/card/Card';
-import { Input } from '../../../components/UI/input/Input';
 import { Button } from '../../../components/UI/button/Button';
 import styles from './thirdStep.module.scss';
-import logo from '../../../logo.svg';
 import clsx from 'clsx';
 
-export const ThirdStep = () => {
+import { usersData } from '../users';
+interface ThirdStepProps {
+  email: string;
+}
+
+export const ThirdStep = ({ email }: ThirdStepProps) => {
+  const user = usersData.find(user => user.email === email);
   let i = 0;
+
   const handleChange = () => {
     i++;
+    console.log(i);
   };
-  const handleBlur = () => {
-    console.log('');
-  };
+
   return (
     <Card type='column'>
       <header className={styles.loginHeader}>
-        <img src={logo} alt='Company logo' className={styles.logoCompany} />
-        <h1 className={styles.loginTitle}>Login</h1>
-        <p>Lorem, ipsum dolor sit amet.</p>
+        <img
+          src={user?.profilePhoto}
+          alt={`User's profile photo`}
+          className={styles.profilePhoto}
+        />
+        <h1 className={styles.loginTitle}>Witaj ponownie!</h1>
+        <p>{user?.name}</p>
       </header>
       <form className={styles.loginForm}>
         <div className={styles.inputContainer}>

@@ -7,6 +7,7 @@ import { Page404 } from './pages/404';
 import { Login } from './pages/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
 import reportWebVitals from './reportWebVitals';
+import { PrivateRoute } from './components/PrivateRpute';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -18,7 +19,14 @@ root.render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route
+          path='/dashboard'
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
         <Route path='*' element={<Page404 />} />
       </Routes>
     </BrowserRouter>

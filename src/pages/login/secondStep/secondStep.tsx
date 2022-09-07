@@ -1,8 +1,8 @@
 import { Card } from '../../../components/UI/card/Card';
 import { Button } from '../../../components/UI/button/Button';
 import { Input } from '../../../components/UI/input/Input';
+import logo from '../../../logo.svg';
 import styles from './secondStep.module.scss';
-import profile from '../../../assets/images/profile-photo.jpg';
 
 import { ChangeEvent } from 'react';
 interface props {
@@ -12,24 +12,23 @@ interface props {
   handleChange: (e: ChangeEvent) => void;
   handleBlur: (e: FocusEvent) => void;
   errors: string | undefined;
-  goToSecondStep: () => void;
+  touched: boolean | undefined;
 }
 
 export const SecondStep = ({
   password,
-  email,
   handleSubmit,
   handleChange,
   handleBlur,
   errors,
-  goToSecondStep,
+  touched,
 }: props) => {
   return (
     <Card type='column'>
       <header className={styles.loginHeader}>
-        <img src={profile} alt='Company logo' className={styles.profilePhoto} />
-        <h1 className={styles.loginTitle}>Witaj ponownie!</h1>
-        <p>{email}</p>
+        <img src={logo} alt='Company logo' className={styles.logoCompany} />
+        <h1 className={styles.loginTitle}>Login</h1>
+        <p>Lorem, ipsum dolor sit amet.</p>
       </header>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
         <Input
@@ -43,6 +42,8 @@ export const SecondStep = ({
           label='Password'
           onChange={handleChange}
           onBlur={handleBlur}
+          hasError={!!errors && touched}
+          error={errors}
         />
         <Button
           type='submit'
