@@ -1,11 +1,7 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .loginContainer {
-  height: auto;
+  width: 100%;
+  height: 95vh;
+  // height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

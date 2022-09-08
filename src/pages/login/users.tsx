@@ -32,7 +32,7 @@ export const usersData = [
     login: 'krzysiek',
     email: 'cris@poczta.pl',
     password: 'vk18%U^',
-    twoStepLogin: true,
+    twoStepLogin: false,
     profilePhoto: '../../../assets/images/profile-4.jpg',
   },
   {

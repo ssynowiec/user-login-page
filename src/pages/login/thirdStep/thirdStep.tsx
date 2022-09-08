@@ -1,7 +1,7 @@
 import { Card } from '../../../components/UI/card/Card';
+import { Input } from '../../../components/UI/input/Input';
 import { Button } from '../../../components/UI/button/Button';
 import styles from './thirdStep.module.scss';
-import clsx from 'clsx';
 
 import { usersData } from '../users';
 interface ThirdStepProps {
@@ -30,64 +30,20 @@ export const ThirdStep = ({ email }: ThirdStepProps) => {
       </header>
       <form className={styles.loginForm}>
         <div className={styles.inputContainer}>
-          <label htmlFor='code' className={styles.inputLabel}>
-            Authentication Code
-          </label>
           <div className={styles.inputs}>
-            <input
-              type='text'
-              id='code'
-              maxLength={1}
-              minLength={1}
-              required
-              autoFocus
+            <Input
+              type='authCode'
+              id='authCode'
+              inputName='authCode'
+              autocomlepte='on'
+              autofocus={true}
+              placholder='XXX XXX'
+              value={''}
+              label='Authentication Code'
               onChange={handleChange}
-              className={clsx(styles.input, 'code')}
-            />
-            <input
-              type='text'
-              id='number2'
-              maxLength={1}
-              minLength={1}
-              required
-              onChange={handleChange}
-              className={clsx(styles.input, 'code')}
-            />
-            <input
-              type='text'
-              id='number3'
-              maxLength={1}
-              minLength={1}
-              required
-              onChange={handleChange}
-              className={clsx(styles.input, 'code')}
-            />
-            <input
-              type='text'
-              id='number4'
-              maxLength={1}
-              minLength={1}
-              required
-              onChange={handleChange}
-              className={clsx(styles.input, 'code')}
-            />
-            <input
-              type='text'
-              id='number5'
-              maxLength={1}
-              minLength={1}
-              required
-              onChange={handleChange}
-              className={clsx(styles.input, 'code')}
-            />
-            <input
-              type='text'
-              id='number6'
-              maxLength={1}
-              minLength={1}
-              required
-              onChange={handleChange}
-              className={clsx(styles.input, 'code')}
+              // onBlur={handleBlur}
+              // hasError={!!errors && touched}
+              // error={errors}
             />
           </div>
         </div>

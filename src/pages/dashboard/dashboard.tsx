@@ -6,7 +6,7 @@ export const Dashboard = () => {
   return (
     <>
       <Nav />
-      <main className={styles.dashboard}>
+      <main className={'test'}>
         <h1>Dashboard</h1>
       </main>
       <Footer />

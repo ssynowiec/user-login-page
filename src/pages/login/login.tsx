@@ -1,16 +1,20 @@
 import { useFormik } from 'formik';
 import { Footer } from '../../components/Layouts/footer/Footer';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FirstStep } from './firstStep/firstStep';
 import { SecondStep } from './secondStep/secondStep';
 import styles from './login.module.scss';
 import { ThirdStep } from './thirdStep/thirdStep';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { usersData } from './users';
+import { AuthContext } from '../../context/autchContext';
 
 export const Login = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+  const AuthCtx = useContext(AuthContext);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -41,6 +45,9 @@ export const Login = () => {
       }
       if (user.twoStepLogin) {
         setStep(3);
+      } else {
+        AuthCtx?.onLogin(user.email, user.password);
+        navigate('/dashboard');
       }
     },
   });

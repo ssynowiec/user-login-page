@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
-import { App } from './App';
+import { Home } from './Home';
 import { Page404 } from './pages/404';
 import { Login } from './pages/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
 import reportWebVitals from './reportWebVitals';
-import { PrivateRoute } from './components/PrivateRpute';
+import { PrivateRoute } from './components/PrivateRoute';
+import { AuthContextProvider } from './context/autchContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -15,21 +16,23 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/login' element={<Login />} />
-        <Route
-          path='/dashboard'
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route path='*' element={<Page404 />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route
+            path='/dashboard'
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route path='*' element={<Page404 />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthContextProvider>
   </React.StrictMode>,
 );
 
